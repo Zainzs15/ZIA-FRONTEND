@@ -138,8 +138,7 @@ const ConfirmPayment = () => {
         {error && <p className="payment-note" style={{ color: "red" }}>{error}</p>}
 
         <p className="payment-note">
-          Note: This is a demo verification. Real automatic verification requires direct
-          integration with JazzCash APIs on the backend.
+          
         </p>
       </div>
     </section>
