@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 import HeroSlider from "./components/HeroSlider";
 import Appointment from "./components/Appointment";
 import Footer from "./components/Footer";
-import Login from "./components/Login";
+import Login from "./components/Signup";
 import Education from "./components/Education";
 import Contact from "./components/Contact";
 import AppointmentPage from "./components/Apointment";
