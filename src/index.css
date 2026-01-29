@@ -1,0 +1,770 @@
+/* =========================
+   ROOT THEME VARIABLES
+========================= */
+:root {
+  --gold: #d4af37;
+  --gold-dark: #b8962e;
+  --gold-soft: #f4e7b7;
+
+  --text-dark: #2e2e2e;
+  --text-light: #666;
+
+  --bg-main: #fffef8;
+  --bg-white: #ffffff;
+
+  --shadow-soft: 0 12px 35px rgba(0,0,0,0.08);
+  --shadow-gold: 0 18px 45px rgba(212,175,55,0.25);
+}
+
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  padding-top: 80px;
+}
+
+/* =========================
+   GLOBAL ANIMATIONS
+========================= */
+@keyframes floatSoft {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes goldGlow {
+  0% { box-shadow: 0 0 0 rgba(212,175,55,0.3); }
+  50% { box-shadow: 0 0 28px rgba(212,175,55,0.5); }
+  100% { box-shadow: 0 0 0 rgba(212,175,55,0.3); }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--bg-white);
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-soft);
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  letter-spacing: 0.5px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.navbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.2s ease;
+}
+
+.navbar a:hover {
+  color: var(--gold-dark);
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  color: var(--gold-dark);
+  cursor: pointer;
+}
+
+/* =========================
+   MOBILE NAVBAR
+========================= */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar ul {
+    position: absolute;
+    top: 72px;
+    right: 20px;
+    width: 240px;
+    background: var(--bg-white);
+    flex-direction: column;
+    padding: 25px;
+    gap: 18px;
+    display: none;
+    box-shadow: var(--shadow-soft);
+    border-radius: 14px;
+  }
+
+  .navbar ul.active {
+    display: flex;
+  }
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+  height: calc(100vh - 80px);
+  width: 100%;
+}
+
+.hero-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.hero .swiper,
+.hero .swiper-slide {
+  height: 100%;
+}
+
+.slide {
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(255,255,255,0.85),
+    rgba(255,255,255,0.95)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.overlay h1 {
+  font-size: 3rem;
+  color: var(--gold-dark);
+  margin-bottom: 18px;
+}
+
+.overlay p {
+  font-size: 1.05rem;
+  color: var(--text-light);
+  max-width: 680px;
+  margin-bottom: 30px;
+}
+
+.hero-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* =========================
+   GOLD BUTTON
+========================= */
+.gold-btn {
+  background: linear-gradient(135deg, #d6bc74, #b89b4c);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 32px;
+  cursor: pointer;
+  /* margin-bottom: 100px; */
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gold-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-gold);
+}
+
+/* =========================
+   MOBILE HERO FIX
+========================= */
+@media (max-width: 768px) {
+  .hero {
+    margin-top: 0;
+  }
+
+  .slide {
+    height: 80vh;
+    background-position: top;
+  }
+
+  .overlay h1 {
+    font-size: 2.1rem;
+  }
+
+  .overlay p {
+    font-size: 1rem;
+  }
+}
+
+/* =========================
+   EDUCATION SECTION
+========================= */
+.education {
+  padding: 120px 10%;
+  background: var(--bg-main);
+  text-align: center;
+}
+
+.education h2 {
+  font-size: 3rem;
+  color: var(--gold);
+  margin-bottom: 80px;
+}
+
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 45px;
+}
+
+.edu-card {
+  background: var(--bg-white);
+  padding: 50px 34px;
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.edu-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-gold);
+}
+
+.edu-card h3 {
+  font-size: 1.7rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.edu-card p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-light);
+}
+
+/* =========================
+   APPOINTMENT SECTION
+========================= */
+.appointment {
+  padding: 110px 10%;
+  background: var(--bg-white);
+  text-align: center;
+}
+
+.form {
+  max-width: 420px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form input,
+.form textarea {
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+  background: linear-gradient(135deg, #d6bc74, #b89b4c);
+  color: white;
+  padding: 24px 10%;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding-bottom: 16px;
+  margin-bottom: 12px;
+}
+
+.footer-brand h3 {
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+
+.footer-brand p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.footer-contact h4,
+.footer-social h4 {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.footer-contact p {
+  font-size: 0.85rem;
+}
+
+.footer-social-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.social-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 0.8rem;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+/* =========================
+   SIMPLE PAGE LAYOUTS
+========================= */
+.page {
+  padding: 120px 10%;
+  background: var(--bg-main);
+}
+
+.page h1 {
+  font-size: 2.4rem;
+  color: var(--gold-dark);
+  margin-bottom: 18px;
+}
+
+.page p {
+  font-size: 1rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.appointment-form {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+}
+
+.appointment-form input,
+.appointment-form textarea {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.appointment-form button {
+  margin-top: 8px;
+  align-self: flex-start;
+  background: var(--gold-dark);
+  color: #fff;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* =========================
+   LOGIN SECTION
+========================= */
+.login-shell {
+  margin: 80px auto 120px;
+  max-width: 420px;
+  padding: 32px 28px;
+  background: var(--bg-white);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+}
+
+.login-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-field label {
+  font-size: 0.85rem;
+  color: var(--text-dark);
+}
+
+.login-field input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.login-field input:focus {
+  outline: none;
+  border-color: var(--gold-dark);
+}
+
+.btn-primary,
+.btn-outline {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 999px;
+  border: 1px solid var(--gold-dark);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.btn-primary {
+  background: var(--gold-dark);
+  color: #fff;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--gold-dark);
+}
+
+.footnote {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+/* =========================
+   PLAN SELECT
+========================= */
+.plan-wrapper {
+  padding: 120px 10%;
+  background: var(--bg-main);
+  text-align: center;
+}
+
+.plan-wrapper .title {
+  font-size: 2.2rem;
+  color: var(--gold-dark);
+  margin-bottom: 8px;
+}
+
+.plan-wrapper .subtitle {
+  margin-bottom: 30px;
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto 30px;
+}
+
+.plan-card {
+  background: var(--bg-white);
+  border-radius: 18px;
+  padding: 18px 20px;
+  border: 1px solid #e5e5e5;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.plan-card .radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan-card .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold-dark);
+}
+
+.plan-card h3 {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+}
+
+.plan-card .price {
+  font-weight: 600;
+  color: var(--gold-dark);
+}
+
+.plan-card .desc {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.plan-card.active {
+  border-color: var(--gold-dark);
+  background: #fff9e4;
+}
+
+.continue-btn {
+  background: var(--gold-dark);
+  color: #fff;
+  border: none;
+  padding: 10px 32px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* =========================
+   PAYMENT PAGE
+========================= */
+.payment-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.payment-box {
+  margin-top: 24px;
+  background: var(--bg-white);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  padding: 24px 22px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.summary-row.total {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.payment-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 14px;
+  border: 1px solid #e5e5e5;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.payment-option input {
+  accent-color: var(--gold-dark);
+}
+
+.payment-option-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pay-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.pay-logo-sadapay {
+  background: #ff6f61;
+}
+
+.pay-logo-nayapay {
+  background: #0d6efd;
+}
+
+.pay-logo-card {
+  background: #4a5568;
+}
+
+.jazzcash-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #7b1f24;
+  margin-bottom: 2px;
+}
+
+.jazzcash-logo-text {
+  font-weight: 700;
+  color: #ffd54f;
+  font-size: 0.8rem;
+}
+
+.payment-note {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+/* =========================
+   ADMIN DASHBOARD
+========================= */
+.admin-page {
+  padding-top: 100px;
+}
+
+.admin-table-wrapper {
+  margin-top: 24px;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-white);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+  background: #fff9e4;
+  text-align: left;
+}
+
+
+
+
+
