@@ -14,52 +14,64 @@ const ConfirmPayment = () => {
   const [error, setError] = useState("");
   const [patientNumber, setPatientNumber] = useState(null);
 
-  const handleConfirm = async (e) => {
-    e.preventDefault();
-    setMessage("");
-    setError("");
+ const handleConfirm = async (e) => {
+  e.preventDefault();
+  setMessage("");
+  setError("");
 
-    if (!name || !phone || !plan || !method || !amount) {
-      setError("Missing payment details. Please start again from plan selection.");
-      return;
+  // basic validation
+  if (!name || !phone || !plan || !method || !amount) {
+    setError("Missing payment details. Please start again from plan selection.");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    // call backend to create appointment
+    const apptRes = await fetch(`${API_BASE}/api/appointments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        phone,
+        plan,
+        preferredDate: new Date().toISOString().slice(0, 10), // today
+        concern: "",
+        method,   // optional, for reference
+        amount,   // optional, for reference
+        txnId,    // optional, user entered
+      }),
+    });
+
+    const apptJson = await apptRes.json().catch(() => null);
+
+    if (!apptRes.ok) {
+      throw new Error(apptJson?.error || "Failed to create appointment");
     }
 
-    setLoading(true);
-    try {
-      // Create appointment slot (payment itself was done manually by patient)
-      const apptRes = await fetch(`${API_BASE}/api/appointments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, plan }),
-      });
+    const appt = apptJson.data;
 
-      if (!apptRes.ok) {
-        const j = await apptRes.json().catch(() => null);
-        throw new Error(j?.error || "Failed to create appointment");
-      }
+    // format slot time
+    const slotStart = new Date(appt.slotStart).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const slotEnd = new Date(appt.slotEnd).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
-      const apptJson = await apptRes.json();
-      const appt = apptJson.data;
-
-      const slotStart = new Date(appt.slotStart).toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      const slotEnd = new Date(appt.slotEnd).toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-
-      setPatientNumber(appt.patientNumber);
-      setMessage(
-        `Your patient number is ${appt.patientNumber} for slot ${slotStart} – ${slotEnd}.`
-      );
-    } catch (err) {
-      setError(err.message || "Something went wrong while booking.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setPatientNumber(appt.patientNumber);
+    setMessage(
+      `Your patient number is ${appt.patientNumber} for slot ${slotStart} – ${slotEnd}.`
+    );
+  } catch (err) {
+    console.error(err);
+    setError(err.message || "Something went wrong while booking your appointment.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <section className="page payment-page">
