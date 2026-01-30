@@ -218,13 +218,13 @@ body {
   font-size: 1.05rem;
   color: var(--text-light);
   max-width: 680px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
 .hero-cta {
   display: flex;
   justify-content: center;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 /* =========================
