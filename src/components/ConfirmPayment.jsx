@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://zia-backend.vercel.app/";
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "") || "https://your-backend-name.vercel.app";
 const JAZZCASH_NUMBER = "0305-2654324";
 
 const ConfirmPayment = () => {
