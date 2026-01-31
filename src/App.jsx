@@ -15,6 +15,9 @@ import PlanSelect from "./components/PlanSelect";
 import Payment from "./components/Payment";
 import ConfirmPayment from "./components/ConfirmPayment";
 
+// ✅ NEW IMPORT (nothing else touched)
+import DoctorProfile from "./components/DoctorProfile";
+
 function App() {
   useEffect(() => {
     AOS.init({
@@ -35,8 +38,11 @@ function App() {
             element={
               <>
                 <HeroSlider />
+
+                {/* ✅ Doctor section added AFTER Hero */}
+                <DoctorProfile />
+
                 <Appointment />
-                
               </>
             }
           />
