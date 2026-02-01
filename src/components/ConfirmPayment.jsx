@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "") || "https://your-backend-name.vercel.app";
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "") || "https://zia-backend-final.vercel.app/";
 const JAZZCASH_NUMBER = "0305-2654324";
 
 const ConfirmPayment = () => {
@@ -28,7 +28,7 @@ const ConfirmPayment = () => {
   setLoading(true);
   try {
     // call backend to create appointment
-    const apptRes = await fetch(`${API_BASE}/api/appointments`, {
+    const apptRes = await fetch(`https://zia-backend-final.vercel.app/api/appointments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
