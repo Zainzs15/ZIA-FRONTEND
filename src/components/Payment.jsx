@@ -6,7 +6,7 @@ const PLAN_PRICES = {
   premium: 1000,
 };
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "") || "https://zia-backend-final.vercel.app/";
+import { API_BASE } from "../config.js";
 
 const Payment = () => {
   const location = useLocation();
