@@ -28,7 +28,7 @@ const ConfirmPayment = () => {
   setLoading(true);
   try {
     // call backend to create appointment
-    const apptRes = await fetch(`https://zia-backend-2.vercel.app/api/appointments`, {
+    const apptRes = await fetch(`https://zia-backend-2.vercel.app/api/apointments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
