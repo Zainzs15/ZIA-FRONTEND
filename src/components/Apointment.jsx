@@ -28,18 +28,27 @@ export default function AppointmentPage() {
           name,
           phone,
           preferredDate: date || new Date().toISOString().slice(0, 10),
-          concern,
+          concern: concern || "",
         }),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || "Failed to book");
-      setMessage(`Booked! Your patient number is ${data.data?.patientNumber}.`);
+      const contentType = res.headers.get("content-type");
+      const isJson = contentType && contentType.includes("application/json");
+      const data = isJson ? await res.json().catch(() => ({})) : {};
+      if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+      const patientNum = data.data?.patientNumber;
+      setMessage(patientNum != null ? `Booked! Your patient number is ${patientNum}.` : "Appointment booked successfully.");
       setName("");
       setPhone("");
       setDate("");
       setConcern("");
     } catch (err) {
-      setError(err.message || "Something went wrong.");
+      console.error("Appointment booking error:", err);
+      const message =
+        err.message ||
+        (err.name === "TypeError" && err.message.includes("fetch")
+          ? "Network error. Check your connection and try again."
+          : "Something went wrong.");
+      setError(message);
     } finally {
       setLoading(false);
     }

@@ -1,12 +1,21 @@
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import { API_BASE } from "../config.js";
 const JAZZCASH_NUMBER = "0305-2654324";
 
 const ConfirmPayment = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { name, phone, plan, method, amount } = location.state || {};
+
+  // Redirect if user landed here without payment details (e.g. refresh or direct URL)
+  const hasPaymentState = location.state?.plan != null || location.state?.amount != null;
+  useEffect(() => {
+    if (!hasPaymentState) {
+      navigate("/plans", { replace: true });
+    }
+  }, [hasPaymentState, navigate]);
 
   const [txnId, setTxnId] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,26 +36,33 @@ const ConfirmPayment = () => {
 
   setLoading(true);
   try {
-    // call backend to create appointment
-    const apptRes = await fetch(`https://zia-backend-2.vercel.app/api/appointments`, {
+    const payload = {
+      name,
+      phone,
+      plan,
+      preferredDate: new Date().toISOString().slice(0, 10),
+      concern: "",
+      method,
+      amount,
+      txnId,
+    };
+    const apptRes = await fetch(`${API_BASE}/api/appointments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        phone,
-        plan,
-        preferredDate: new Date().toISOString().slice(0, 10), // today
-        concern: "",
-        method,   // optional, for reference
-        amount,   // optional, for reference
-        txnId,    // optional, user entered
-      }),
+      body: JSON.stringify(payload),
     });
 
-    const apptJson = await apptRes.json().catch(() => null);
+    const contentType = apptRes.headers.get("content-type");
+    const isJson = contentType && contentType.includes("application/json");
+    const apptJson = isJson ? await apptRes.json().catch(() => null) : null;
 
     if (!apptRes.ok) {
-      throw new Error(apptJson?.error || "Failed to create appointment");
+      const msg = apptJson?.error || `Request failed (${apptRes.status})`;
+      throw new Error(msg);
+    }
+
+    if (!apptJson?.data) {
+      throw new Error("Invalid response from server");
     }
 
     const appt = apptJson.data;
@@ -66,12 +82,25 @@ const ConfirmPayment = () => {
       `Your patient number is ${appt.patientNumber} for slot ${slotStart} – ${slotEnd}.`
     );
   } catch (err) {
-    console.error(err);
-    setError(err.message || "Something went wrong while booking your appointment.");
+    console.error("ConfirmPayment error:", err);
+    const message =
+      err.message ||
+      (err.name === "TypeError" && err.message.includes("fetch")
+        ? "Network error. Check your connection and try again."
+        : "Something went wrong while booking your appointment.");
+    setError(message);
   } finally {
     setLoading(false);
   }
 };
+
+  if (!hasPaymentState) {
+    return (
+      <section className="page payment-page">
+        <p>Redirecting to plans...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="page payment-page">
