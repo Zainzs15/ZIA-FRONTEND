@@ -8,9 +8,9 @@ export default function Contact() {
         consultation or any query.
       </p>
 
-      <p><strong>📍 Clinic Address:</strong> Your Clinic Address Here</p>
-      <p><strong>📞 Phone:</strong> +92 XXXXXXXX</p>
-      <p><strong>🕒 Timings:</strong> Mon – Sat | 10 AM – 7 PM</p>
+      <p><strong>📍 Clinic Address:</strong> R 324 , Block 15 F.B area karachi</p>
+      <p><strong>📞 Phone:</strong> +92 333 2081853 ,+92 305 2654324 </p>
+      <p><strong>🕒 Timings:</strong> Sat - Thu | 7 pm - 10 pm</p>
     </section>
   );
 }
