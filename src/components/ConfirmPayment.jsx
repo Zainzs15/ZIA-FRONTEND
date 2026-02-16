@@ -19,13 +19,10 @@ const ConfirmPayment = () => {
 
   const [txnId, setTxnId] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [patientNumber, setPatientNumber] = useState(null);
 
  const handleConfirm = async (e) => {
   e.preventDefault();
-  setMessage("");
   setError("");
 
   // basic validation
@@ -77,10 +74,18 @@ const ConfirmPayment = () => {
       minute: "2-digit",
     });
 
-    setPatientNumber(appt.patientNumber);
-    setMessage(
-      `Your patient number is ${appt.patientNumber} for slot ${slotStart} – ${slotEnd}.`
-    );
+    navigate("/share-payment", {
+      state: {
+        name,
+        phone,
+        plan,
+        method,
+        amount,
+        patientNumber: appt.patientNumber,
+        slotStart,
+        slotEnd,
+      },
+    });
   } catch (err) {
     console.error("ConfirmPayment error:", err);
     const message =
@@ -146,36 +151,9 @@ const ConfirmPayment = () => {
           </div>
 
           <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? "Verifying..." : "I have paid – Book my appointment"}
+            {loading ? "Verifying..." : "Book my appointment"}
           </button>
         </form>
-
-        {message && (
-          <>
-            <p className="payment-note" style={{ color: "green" }}>
-              {message}
-            </p>
-            <p className="payment-note">
-              Now share your <strong>payment screenshot</strong> along with your{" "}
-              <strong>name</strong>, <strong>phone number</strong> and{" "}
-              <strong>patient number</strong> with the clinic so your booking is fully
-              confirmed.
-            </p>
-            <a
-              href={`https://wa.me/923332081853?text=${encodeURIComponent(
-                `Salam, my name is ${name || ""}.\nPatient number: ${
-                  patientNumber || ""
-                }\nPhone: ${phone || ""}\nI am sharing my payment screenshot for confirmation.`
-              )}`}
-              target="_blank"
-              rel="noreferrer"
-              className="gold-btn"
-              style={{ width: "100%", textAlign: "center", marginTop: "10px" }}
-            >
-              Open WhatsApp with my details
-            </a>
-          </>
-        )}
         {error && <p className="payment-note" style={{ color: "red" }}>{error}</p>}
 
         <p className="payment-note">

@@ -732,12 +732,19 @@ body {
   color: var(--text-light);
 }
 
-/* Mobile tweak for WhatsApp CTA button on confirm-payment page */
+.whatsapp-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* Mobile tweak for WhatsApp CTA button on payment/share pages */
 @media (max-width: 480px) {
-  .payment-page .gold-btn {
+  .payment-page .whatsapp-cta {
     padding: 12px 18px;
     font-size: 0.9rem;
-    line-height: 1.3;
+    line-height: 1.4;
     white-space: normal;
   }
 }

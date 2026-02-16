@@ -14,6 +14,7 @@ import AppointmentPage from "./components/Apointment";
 import PlanSelect from "./components/PlanSelect";
 import Payment from "./components/Payment";
 import ConfirmPayment from "./components/ConfirmPayment";
+import SharePayment from "./components/SharePayment";
 
 // ✅ NEW IMPORT (nothing else touched)
 import DoctorProfile from "./components/DoctorProfile";
@@ -51,6 +52,7 @@ function App() {
           <Route path="/plans" element={<PlanSelect />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/confirm-payment" element={<ConfirmPayment />} />
+          <Route path="/share-payment" element={<SharePayment />} />
           <Route path="/education" element={<Education />} />
           <Route path="/appointment" element={<AppointmentPage />} />
           <Route path="/contact" element={<Contact />} />
